@@ -166,4 +166,4 @@ char* reverseWord(const char *input, char *output) {
 | **Stack Underflow** | $\mathcal{O}(1)$ check | `top < 0` (stops popping when empty) |
 
 ## Web App Link
-| Visit the project here: (stackwordreverser.netlify.app)
+| Visit the project here: [https://stackwordreverser.netlify.app](stackwordreverser.netlify.app)
