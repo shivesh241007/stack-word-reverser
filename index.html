@@ -431,43 +431,146 @@
       color: var(--accent-cyan);
     }
 
-    /* Visual Glass Stack Vessel */
+    /* Visual Glass Stack Vessel - Tall Scrollable Viewport */
     .stack-vessel-wrapper {
       display: flex;
       gap: 24px;
-      align-items: flex-end;
-      min-height: 220px;
+      align-items: stretch;
+      min-height: 420px;
     }
 
     .stack-vessel {
       flex: 1;
-      min-height: 190px;
-      max-height: 260px;
-      background: linear-gradient(180deg, rgba(30, 41, 59, 0.12) 0%, rgba(15, 23, 42, 0.45) 100%);
+      height: 380px;
+      max-height: 420px;
+      background: linear-gradient(180deg, rgba(30, 41, 59, 0.16) 0%, rgba(15, 23, 42, 0.58) 100%);
       border-left: 2px solid rgba(56, 189, 248, 0.35);
       border-right: 2px solid rgba(56, 189, 248, 0.35);
-      border-bottom: 3px solid rgba(56, 189, 248, 0.7);
-      border-radius: 0 0 16px 16px;
-      padding: 12px 14px;
-      display: flex;
-      flex-direction: column-reverse; /* Stack grows from bottom upward */
-      gap: 6px;
+      border-bottom: 4px solid rgba(56, 189, 248, 0.85);
+      border-top: 1px dashed rgba(56, 189, 248, 0.28);
+      border-radius: 4px 4px 18px 18px;
+      padding: 0 14px 14px;
       overflow-y: auto;
-      box-shadow: inset 0 -10px 30px rgba(56, 189, 248, 0.08);
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+      box-shadow: inset 0 -15px 35px rgba(56, 189, 248, 0.12), inset 0 10px 25px rgba(0, 0, 0, 0.35);
       position: relative;
     }
 
     .stack-vessel::-webkit-scrollbar {
-      width: 4px;
+      width: 6px;
+    }
+    .stack-vessel::-webkit-scrollbar-track {
+      background: rgba(15, 23, 42, 0.45);
+      border-radius: 4px;
     }
     .stack-vessel::-webkit-scrollbar-thumb {
-      background: rgba(255, 255, 255, 0.15);
+      background: linear-gradient(180deg, rgba(56, 189, 248, 0.75), rgba(129, 140, 248, 0.75));
       border-radius: 4px;
+      box-shadow: 0 0 10px rgba(56, 189, 248, 0.45);
+    }
+
+    /* Vessel Top Lip (Open Stack Entrance / Exit) */
+    .vessel-top-lip {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: linear-gradient(180deg, rgba(8, 14, 26, 0.94) 0%, rgba(8, 14, 26, 0) 100%);
+      padding: 8px 12px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent-cyan);
+      pointer-events: none;
+      border-bottom: 1px dashed rgba(56, 189, 248, 0.2);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+    }
+
+    .vessel-lip-arrow {
+      font-size: 0.6rem;
+      color: var(--accent-cyan);
+      animation: bounceLip 1.5s ease-in-out infinite alternate;
+    }
+
+    @keyframes bounceLip {
+      0% { transform: translateY(0); opacity: 0.6; }
+      100% { transform: translateY(-3px); opacity: 1; }
+    }
+
+    /* Vertical graduation ticks along the vessel */
+    .vessel-ruler-overlay {
+      position: absolute;
+      top: 36px;
+      left: 0;
+      bottom: 0;
+      width: 22px;
+      pointer-events: none;
+      background: repeating-linear-gradient(
+        180deg,
+        transparent,
+        transparent 27px,
+        rgba(56, 189, 248, 0.1) 28px
+      );
+      border-right: 1px solid rgba(255, 255, 255, 0.04);
+      z-index: 1;
+    }
+
+    /* Scrollable Stack Track (elements stack upwards) */
+    .stack-track {
+      display: flex;
+      flex-direction: column;
+      min-height: 100%;
+      padding-top: 16px;
+      padding-bottom: 8px;
+      gap: 8px;
+      position: relative;
+      z-index: 3;
+    }
+
+    /* Dynamic Headroom Spacer so even short strings travel noticeably upward */
+    .stack-spacer {
+      flex: 1 1 auto;
+      min-height: 220px;
+      transition: min-height 0.3s ease;
+    }
+
+    /* Base plate of the Stack */
+    .stack-base-plate {
+      margin-top: 8px;
+      padding: 10px 14px;
+      background: rgba(15, 23, 42, 0.7);
+      border: 1px solid rgba(56, 189, 248, 0.35);
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-family: var(--font-mono);
+      font-size: 0.74rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      color: var(--accent-cyan);
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+      flex-shrink: 0;
+    }
+
+    .stack-base-plate .base-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent-cyan);
+      box-shadow: 0 0 8px var(--accent-cyan);
     }
 
     .stack-empty-msg {
       position: absolute;
-      top: 50%;
+      top: 55%;
       left: 50%;
       transform: translate(-50%, -50%);
       font-size: 0.82rem;
@@ -478,27 +581,48 @@
       flex-direction: column;
       align-items: center;
       gap: 6px;
+      z-index: 4;
+      background: rgba(8, 14, 26, 0.7);
+      padding: 12px 18px;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      backdrop-filter: blur(8px);
     }
 
     /* Stack Element Tile */
     .stack-element {
-      background: rgba(30, 41, 59, 0.8);
+      background: rgba(30, 41, 59, 0.85);
       border: 1px solid rgba(255, 255, 255, 0.14);
       border-radius: var(--radius-sm);
-      padding: 9px 14px;
+      padding: 10px 14px;
       display: flex;
       justify-content: space-between;
       align-items: center;
       backdrop-filter: blur(8px);
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2);
       animation: pushSlide 0.28s cubic-bezier(0.16, 1, 0.3, 1);
-      transition: all 0.2s ease;
+      transition: all 0.22s ease;
+      position: relative;
+      z-index: 3;
+      flex-shrink: 0;
     }
 
     .stack-element.top-elem {
-      border-color: rgba(56, 189, 248, 0.6);
-      background: rgba(14, 116, 144, 0.3);
-      box-shadow: 0 0 14px rgba(56, 189, 248, 0.25);
+      border-color: rgba(56, 189, 248, 0.75);
+      background: rgba(14, 116, 144, 0.38);
+      box-shadow: 0 0 16px rgba(56, 189, 248, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    }
+
+    .stack-element.holding-peak {
+      border-color: #38bdf8;
+      background: rgba(14, 116, 144, 0.55);
+      box-shadow: 0 0 24px rgba(56, 189, 248, 0.65), inset 0 0 12px rgba(56, 189, 248, 0.3);
+      animation: peakPulse 1s ease-in-out infinite alternate;
+    }
+
+    @keyframes peakPulse {
+      0% { transform: scale(1); }
+      100% { transform: scale(1.02); }
     }
 
     .stack-element.popping {
@@ -548,19 +672,20 @@
       }
     }
 
-    /* Stack Pointers & Memory HUD */
+    /* Stack Pointers & Memory HUD (Taller layout matching vessel) */
     .stack-sidebar-info {
       width: 140px;
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      justify-content: space-between;
+      gap: 10px;
     }
 
     .pointer-card {
       background: rgba(15, 23, 42, 0.5);
       border: 1px solid rgba(255, 255, 255, 0.06);
       border-radius: var(--radius-sm);
-      padding: 10px 12px;
+      padding: 12px 14px;
     }
 
     .pointer-card .label {
@@ -568,12 +693,12 @@
       color: var(--text-dim);
       text-transform: uppercase;
       letter-spacing: 0.05em;
-      margin-bottom: 2px;
+      margin-bottom: 3px;
     }
 
     .pointer-card .value {
       font-family: var(--font-mono);
-      font-size: 1rem;
+      font-size: 1.05rem;
       font-weight: 600;
       color: var(--accent-cyan);
     }
@@ -969,8 +1094,29 @@
           </div>
 
           <div class="stack-vessel-wrapper">
-            <!-- Glass Stack Column -->
+            <!-- Glass Stack Column with Viewport Graphics -->
             <div class="stack-vessel" id="stackVessel" role="region" aria-label="Visual Stack Elements">
+              <!-- Sticky Open Top Lip -->
+              <div class="vessel-top-lip">
+                <span class="vessel-lip-arrow">▲</span>
+                <span>STACK OPEN TOP (LIFO PORT)</span>
+                <span class="vessel-lip-arrow">▲</span>
+              </div>
+
+              <!-- Graduation Ticks Overlay -->
+              <div class="vessel-ruler-overlay"></div>
+
+              <!-- Dynamic Stack Track -->
+              <div class="stack-track" id="stackTrack">
+                <div class="stack-spacer" id="stackSpacer"></div>
+                <!-- Pushed elements will be inserted dynamically here -->
+                <div class="stack-base-plate" id="stackBasePlate">
+                  <span class="base-dot"></span>
+                  <span>STACK BASE &bull; TOP = -1 (UNDERFLOW)</span>
+                  <span class="base-dot"></span>
+                </div>
+              </div>
+
               <div class="stack-empty-msg" id="emptyMsg">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
                   <path d="M12 3v18M3 12h18"></path>
@@ -1358,6 +1504,27 @@
       }
     }
 
+    function scrollViewportToElement(elem, isSmooth = true) {
+      if (!elem || !stackVessel) return;
+      const vesselHeight = stackVessel.clientHeight;
+      const elemTop = elem.offsetTop;
+      const elemHeight = elem.clientHeight || 48;
+      // Position element around 32% from the top of the vessel window
+      const targetTop = elemTop - (vesselHeight * 0.32) + (elemHeight / 2);
+      stackVessel.scrollTo({
+        top: Math.max(0, Math.round(targetTop)),
+        behavior: isSmooth ? 'smooth' : 'auto'
+      });
+    }
+
+    function scrollViewportToBottom(isSmooth = true) {
+      if (!stackVessel) return;
+      stackVessel.scrollTo({
+        top: stackVessel.scrollHeight,
+        behavior: isSmooth ? 'smooth' : 'auto'
+      });
+    }
+
     function resetAlgorithm() {
       cancelRequested = true;
       isRunning = false;
@@ -1372,14 +1539,23 @@
 
       // Reset HUD
       updateHUD(-1, "Underflow", "Status: Ready");
-      stackVessel.innerHTML = `
-        <div class="stack-empty-msg" id="emptyMsg">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-            <path d="M12 3v18M3 12h18"></path>
-          </svg>
-          <span>Stack Empty (top = -1)</span>
-        </div>
-      `;
+      
+      const track = document.getElementById('stackTrack');
+      if (track) {
+        track.innerHTML = `
+          <div class="stack-spacer" id="stackSpacer"></div>
+          <div class="stack-base-plate" id="stackBasePlate">
+            <span class="base-dot"></span>
+            <span>STACK BASE &bull; TOP = -1 (UNDERFLOW)</span>
+            <span class="base-dot"></span>
+          </div>
+        `;
+      }
+      const emptyMsgElem = document.getElementById('emptyMsg');
+      if (emptyMsgElem) emptyMsgElem.style.display = 'flex';
+
+      scrollViewportToBottom(false);
+
       outputString.innerHTML = `<span class="output-placeholder">Reversed characters will assemble here...</span>`;
       palindromeBadgeContainer.innerHTML = "";
 
@@ -1400,7 +1576,7 @@
     const waitMs = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
     /* ==========================================================================
-       Core Execution: 4 Algorithm Steps
+       Core Execution: 4 Algorithm Steps with Upward / Downward Viewport Animation
        ========================================================================== */
     async function executeReverseFlow(isStepByStep = false) {
       if (isRunning) return;
@@ -1416,8 +1592,22 @@
 
       const speed = parseInt(speedSelect.value, 10);
 
+      // Clean stack track before running
+      const track = document.getElementById('stackTrack');
+      if (track) {
+        track.innerHTML = `
+          <div class="stack-spacer" id="stackSpacer"></div>
+          <div class="stack-base-plate" id="stackBasePlate">
+            <span class="base-dot"></span>
+            <span>STACK BASE &bull; TOP = -1 (UNDERFLOW)</span>
+            <span class="base-dot"></span>
+          </div>
+        `;
+      }
+      scrollViewportToBottom(false);
+
       // ------------------------------------------------------------------------
-      // STEP 1: Word input entered by the user
+      // 1. STEP 1: Word input entered by the user
       // ------------------------------------------------------------------------
       flowStep1.classList.add('active');
       tagStep1.textContent = "Active";
@@ -1425,7 +1615,7 @@
       infoInputLen.textContent = inputStr.length;
       hudState.textContent = "Step 1: Input Received";
 
-      if (speed > 0) await waitMs(speed);
+      if (speed > 0) await waitMs(Math.max(250, Math.round(speed * 0.8)));
       if (cancelRequested) return;
 
       flowStep1.classList.remove('active');
@@ -1433,13 +1623,14 @@
       tagStep1.textContent = "Done";
 
       // ------------------------------------------------------------------------
-      // STEP 2: Input word's characters is pushed one by one into the stack
+      // 2. STEP 2: PUSH (Bottom to top)
+      // Viewport moves progressively upwards following each pushed character
       // ------------------------------------------------------------------------
       flowStep2.classList.add('active');
-      tagStep2.textContent = "Pushing...";
-      hudState.textContent = "Step 2: Pushing to C Stack";
+      tagStep2.textContent = "Pushing (0%)";
+      hudState.textContent = "PUSH: Bottom to Top";
 
-      // Clear empty message
+      // Hide empty message
       const emptyMsgElem = document.getElementById('emptyMsg');
       if (emptyMsgElem) emptyMsgElem.style.display = 'none';
 
@@ -1457,14 +1648,19 @@
         // Update live info
         infoPushChar.textContent = `'${char}' (ASCII ${code})`;
         infoPushTop.textContent = newTop;
-        updateHUD(newTop, "Normal", `Pushed: '${char}'`);
+        const progressPct = Math.round(((i + 1) / inputStr.length) * 100);
+        tagStep2.textContent = `Pushing (${progressPct}%)`;
+        updateHUD(newTop, "Normal", `PUSH: '${char}' -> top = [${newTop}]`);
 
         // Render Stack Element in UI
         const elemDiv = document.createElement('div');
         elemDiv.className = 'stack-element top-elem';
         elemDiv.id = `elem-slot-${newTop}`;
         elemDiv.innerHTML = `
-          <div class="elem-char">${char}</div>
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <span style="font-size: 0.75rem; color: var(--accent-cyan); font-family: var(--font-mono); font-weight: 600;">[${newTop}]</span>
+            <span class="elem-char">${char}</span>
+          </div>
           <div class="elem-meta">
             <span class="top-indicator">TOP &bull; [${newTop}]</span>
             <span>0x${(newTop * 4).toString(16).padStart(2, '0')}</span>
@@ -1479,8 +1675,12 @@
           if (prevInd) prevInd.textContent = `[${newTop - 1}]`;
         }
 
-        stackVessel.appendChild(elemDiv);
-        stackVessel.scrollTop = stackVessel.scrollHeight;
+        // Insert right after stackSpacer (visually on top of previous element)
+        const currentSpacer = document.getElementById('stackSpacer');
+        currentSpacer.insertAdjacentElement('afterend', elemDiv);
+
+        // Viewport moves progressively upwards to follow newly pushed character!
+        scrollViewportToElement(elemDiv, speed > 0);
 
         if (speed > 0) await waitMs(speed);
       }
@@ -1489,15 +1689,35 @@
       flowStep2.classList.add('completed');
       tagStep2.textContent = "Pushed (100%)";
 
-      if (speed > 0) await waitMs(speed);
+      // ------------------------------------------------------------------------
+      // 2. PAUSE AT THE TOP
+      // Once all characters have been pushed, pause briefly at highest position.
+      // Keep complete stack visible in its final pushed state.
+      // ------------------------------------------------------------------------
+      const highestTop = inputStr.length - 1;
+      const highestElem = document.getElementById(`elem-slot-${highestTop}`);
+      if (highestElem) {
+        highestElem.classList.add('holding-peak');
+        scrollViewportToElement(highestElem, speed > 0);
+      }
+      hudState.textContent = "PAUSE: Complete Stack at Peak";
+
+      const pauseDuration = speed === 0 ? 0 : Math.max(750, Math.round(speed * 2.2));
+      if (pauseDuration > 0) await waitMs(pauseDuration);
       if (cancelRequested) return;
 
+      if (highestElem) {
+        highestElem.classList.remove('holding-peak');
+      }
+
       // ------------------------------------------------------------------------
-      // STEP 3: The elements are popped one by one until the stack is empty
+      // 3. STEP 3: POP (Top to bottom)
+      // Retracing the exact same vertical path downwards.
+      // Viewport smoothly moves downwards towards the bottom with each POP.
       // ------------------------------------------------------------------------
       flowStep3.classList.add('active');
       tagStep3.textContent = "Popping...";
-      hudState.textContent = "Step 3: Popping until Underflow";
+      hudState.textContent = "POP: Top to Bottom";
 
       accumulatedOutput = "";
       outputString.textContent = "";
@@ -1526,16 +1746,21 @@
         const afterPopTop = cEngine.c_get_top();
         infoPopChar.textContent = `'${poppedChar}'`;
         infoUnderflow.textContent = afterPopTop < 0 ? "YES (Underflow!)" : "NO";
-        updateHUD(afterPopTop, afterPopTop < 0 ? "Underflow" : "Normal", `Popped: '${poppedChar}'`);
+        updateHUD(afterPopTop, afterPopTop < 0 ? "Underflow" : "Normal", `POP: '${poppedChar}' (LIFO)`);
 
-        // Highlight next top in vessel
+        // Highlight next top in vessel and smoothly retrace downwards!
         if (afterPopTop >= 0) {
           const nextTopElem = document.getElementById(`elem-slot-${afterPopTop}`);
           if (nextTopElem) {
             nextTopElem.classList.add('top-elem');
             const ind = nextTopElem.querySelector('.top-indicator');
             if (ind) ind.textContent = `TOP &bull; [${afterPopTop}]`;
+            // Smoothly move viewport downwards towards the new top
+            scrollViewportToElement(nextTopElem, speed > 0);
           }
+        } else {
+          // Last element popped! Smoothly scroll all the way back to bottom base!
+          scrollViewportToBottom(speed > 0);
         }
 
         // Live display output accumulation
@@ -1553,24 +1778,24 @@
         }
       }
 
-      // Stack underflow confirmed
-      const emptyMsgAfter = document.getElementById('emptyMsg');
-      if (emptyMsgAfter) emptyMsgAfter.style.display = 'flex';
+      // ------------------------------------------------------------------------
+      // 4. COMPLETION
+      // Return viewport to original bottom position and display reversed word
+      // ------------------------------------------------------------------------
+      scrollViewportToBottom(true);
+      if (emptyMsgElem) emptyMsgElem.style.display = 'flex';
 
       flowStep3.classList.remove('active');
       flowStep3.classList.add('completed');
       tagStep3.textContent = "Underflow Reached";
 
-      if (speed > 0) await waitMs(speed);
+      if (speed > 0) await waitMs(Math.max(200, Math.round(speed * 0.6)));
       if (cancelRequested) return;
 
-      // ------------------------------------------------------------------------
-      // STEP 4: Reversed string is displayed
-      // ------------------------------------------------------------------------
       flowStep4.classList.add('active');
       tagStep4.textContent = "Displayed";
       infoFinalResult.textContent = accumulatedOutput;
-      hudState.textContent = "Step 4: Reversal Complete!";
+      hudState.textContent = "Complete: Viewport at Bottom";
 
       outputString.textContent = accumulatedOutput;
       checkPalindrome(inputStr, accumulatedOutput);
@@ -1605,6 +1830,7 @@
         cEngine.c_init();
         const emptyMsgElem = document.getElementById('emptyMsg');
         if (emptyMsgElem) emptyMsgElem.style.display = 'none';
+        scrollViewportToBottom(false);
         return;
       }
 
@@ -1621,13 +1847,16 @@
 
         infoPushChar.textContent = `'${char}'`;
         infoPushTop.textContent = newTop;
-        updateHUD(newTop, "Normal", `Pushed '${char}'`);
+        updateHUD(newTop, "Normal", `PUSH: '${char}' -> top = [${newTop}]`);
 
         const elemDiv = document.createElement('div');
         elemDiv.className = 'stack-element top-elem';
         elemDiv.id = `elem-slot-${newTop}`;
         elemDiv.innerHTML = `
-          <div class="elem-char">${char}</div>
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <span style="font-size: 0.75rem; color: var(--accent-cyan); font-family: var(--font-mono); font-weight: 600;">[${newTop}]</span>
+            <span class="elem-char">${char}</span>
+          </div>
           <div class="elem-meta">
             <span class="top-indicator">TOP &bull; [${newTop}]</span>
             <span>0x${(newTop * 4).toString(16).padStart(2, '0')}</span>
@@ -1639,14 +1868,20 @@
           const ind = prevTop.querySelector('.top-indicator');
           if (ind) ind.textContent = `[${newTop - 1}]`;
         }
-        stackVessel.appendChild(elemDiv);
-        stackVessel.scrollTop = stackVessel.scrollHeight;
+
+        const currentSpacer = document.getElementById('stackSpacer');
+        currentSpacer.insertAdjacentElement('afterend', elemDiv);
+
+        // Viewport moves progressively upwards!
+        scrollViewportToElement(elemDiv, true);
 
         pushIndex++;
         if (pushIndex >= activeWord.length) {
           flowStep2.classList.remove('active');
           flowStep2.classList.add('completed');
           tagStep2.textContent = "Done";
+          elemDiv.classList.add('holding-peak');
+          hudState.textContent = "PAUSE: Complete Stack at Peak";
           stepIndex = 2; // move to pop
         }
         return;
@@ -1656,6 +1891,9 @@
       if (stepIndex === 2) {
         flowStep3.classList.add('active');
         tagStep3.textContent = "Popping...";
+
+        const peakElem = document.querySelector('.holding-peak');
+        if (peakElem) peakElem.classList.remove('holding-peak');
 
         if (cEngine.c_is_empty() === 0) {
           const currentTop = cEngine.c_get_top();
@@ -1669,16 +1907,20 @@
           const afterTop = cEngine.c_get_top();
           infoPopChar.textContent = `'${poppedChar}'`;
           infoUnderflow.textContent = afterTop < 0 ? "YES (Underflow!)" : "NO";
-          updateHUD(afterTop, afterTop < 0 ? "Underflow" : "Normal", `Popped '${poppedChar}'`);
+          updateHUD(afterTop, afterTop < 0 ? "Underflow" : "Normal", `POP: '${poppedChar}'`);
 
           if (afterTop >= 0) {
             const nextElem = document.getElementById(`elem-slot-${afterTop}`);
-            if (nextElem) nextElem.classList.add('top-elem');
-          }
-
-          outputString.textContent = accumulatedOutput;
-
-          if (cEngine.c_is_empty() === 1) {
+            if (nextElem) {
+              nextElem.classList.add('top-elem');
+              const ind = nextElem.querySelector('.top-indicator');
+              if (ind) ind.textContent = `TOP &bull; [${afterTop}]`;
+              // Viewport retraces downward
+              scrollViewportToElement(nextElem, true);
+            }
+          } else {
+            // Viewport returns to bottom
+            scrollViewportToBottom(true);
             const emptyMsgAfter = document.getElementById('emptyMsg');
             if (emptyMsgAfter) emptyMsgAfter.style.display = 'flex';
             flowStep3.classList.remove('active');
@@ -1686,6 +1928,8 @@
             tagStep3.textContent = "Underflow Reached";
             stepIndex = 3;
           }
+
+          outputString.textContent = accumulatedOutput;
         }
         return;
       }
@@ -1695,7 +1939,9 @@
         flowStep4.classList.add('active');
         tagStep4.textContent = "Done";
         infoFinalResult.textContent = accumulatedOutput;
+        hudState.textContent = "Complete: Viewport at Bottom";
         checkPalindrome(activeWord, accumulatedOutput);
+        scrollViewportToBottom(true);
         stepIndex = 0; // ready to restart
       }
     }
