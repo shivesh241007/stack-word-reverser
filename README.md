@@ -60,14 +60,7 @@ d:/College/projekt/
 
 ---
 
-## 🚀 How to Run & Deploy
 
-### 1. Direct Web Deployment (Zero Setup / Static Hosting)
-- **Local:** Simply double-click `index.html` to open it in any web browser (Chrome, Edge, Firefox, Safari).
-- **GitHub Pages:** Push this repository to GitHub and enable **Settings > Pages > Deploy from branch (main / root)**.
-- **Vercel / Netlify:** Drag-and-drop the project folder or import from GitHub. `index.html` is 100% self-contained with no external CDN or server dependencies.
-
-### 2. Standalone C Terminal Program
 To compile and test the C program directly in the terminal:
 
 ```bash
