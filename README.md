@@ -164,3 +164,6 @@ char* reverseWord(const char *input, char *output) {
 | **Auxiliary Space** | $\mathcal{O}(N)$ | Stack array storing $N$ characters in memory |
 | **Stack Overflow** | $\mathcal{O}(1)$ check | `top >= capacity - 1` |
 | **Stack Underflow** | $\mathcal{O}(1)$ check | `top < 0` (stops popping when empty) |
+
+## Web App Link:
+| stackwordreverser.netlify.app
